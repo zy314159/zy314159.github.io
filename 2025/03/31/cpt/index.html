@@ -20,23 +20,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2407.15819 项目地址：https:&#x2F;&#x2F;chain-of-sight.github.io&#x2F; 摘要 由于受到计算资源的限制，个体研究者们难以自行预训练多模态大模型，往往都是加载已经预训练好的模型权重，然后再根据自己的任务进行微调。这限制了模型架构的发展，因为研究者们往往需要对自己的模型进行修改以适配预训练的多模态大模型。但是如果能够降低预">
+  <meta name="description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2109.11797代码地址：https:&#x2F;&#x2F;github.com&#x2F;thunlp&#x2F;CPT 摘要 预训练视觉语言模型在视觉语义定位任务(Visual Grounding)中表现出优良性能，促进了跨模态任务的发展。然而，由于预训练任务和下游任务的目标形式之间存在着显著差异，必须使用大量带标签的数据对模型进行微调才能在下游任务上激发模型的视觉语义定位">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Chain_of_Sight加速多模态大模型预训练.md">
-<meta property="og:url" content="http://example.com/2025/03/30/Chain-of-Sight-md/index.html">
+<meta property="og:title" content="CPT模型（针对预训练模型的色彩提示微调）">
+<meta property="og:url" content="http://example.com/2025/03/31/cpt/index.html">
 <meta property="og:site_name" content="Zhang Young&#39;s Blog">
-<meta property="og:description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2407.15819 项目地址：https:&#x2F;&#x2F;chain-of-sight.github.io&#x2F; 摘要 由于受到计算资源的限制，个体研究者们难以自行预训练多模态大模型，往往都是加载已经预训练好的模型权重，然后再根据自己的任务进行微调。这限制了模型架构的发展，因为研究者们往往需要对自己的模型进行修改以适配预训练的多模态大模型。但是如果能够降低预">
+<meta property="og:description" content="论文地址：https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2109.11797代码地址：https:&#x2F;&#x2F;github.com&#x2F;thunlp&#x2F;CPT 摘要 预训练视觉语言模型在视觉语义定位任务(Visual Grounding)中表现出优良性能，促进了跨模态任务的发展。然而，由于预训练任务和下游任务的目标形式之间存在着显著差异，必须使用大量带标签的数据对模型进行微调才能在下游任务上激发模型的视觉语义定位">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://chain-of-sight.github.io/static/images/chain-of-sight_architecture.png">
-<meta property="article:published_time" content="2025-03-30T02:08:46.000Z">
-<meta property="article:modified_time" content="2025-03-30T02:19:38.142Z">
+<meta property="og:image" content="https://github.com/thunlp/CPT/blob/main/demo/teaser.png?raw=true">
+<meta property="article:published_time" content="2025-03-30T18:00:48.000Z">
+<meta property="article:modified_time" content="2025-03-30T18:04:06.055Z">
 <meta property="article:author" content="Zhang Young">
 <meta property="article:tag" content="多模态机器学习">
-<meta property="article:tag" content="大语言模型">
+<meta property="article:tag" content="微调方法">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chain-of-sight.github.io/static/images/chain-of-sight_architecture.png">
+<meta name="twitter:image" content="https://github.com/thunlp/CPT/blob/main/demo/teaser.png?raw=true">
 
-<link rel="canonical" href="http://example.com/2025/03/30/Chain-of-Sight-md/">
+<link rel="canonical" href="http://example.com/2025/03/31/cpt/">
 
 
 <script id="page-configurations">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>Chain_of_Sight加速多模态大模型预训练.md | Zhang Young's Blog</title>
+  <title>CPT模型（针对预训练模型的色彩提示微调） | Zhang Young's Blog</title>
   
 
 
@@ -184,7 +184,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/30/Chain-of-Sight-md/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/31/cpt/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUpAmio-q9vrzRIp1bLP-7yH4jtHDss6W8Mg&s">
@@ -197,7 +197,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Chain_of_Sight加速多模态大模型预训练.md
+          CPT模型（针对预训练模型的色彩提示微调）
         </h1>
 
         <div class="post-meta">
@@ -208,7 +208,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-03-30 10:08:46 / 修改时间：10:19:38" itemprop="dateCreated datePublished" datetime="2025-03-30T10:08:46+08:00">2025-03-30</time>
+              <time title="创建时间：2025-03-31 02:00:48 / 修改时间：02:04:06" itemprop="dateCreated datePublished" datetime="2025-03-31T02:00:48+08:00">2025-03-31</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,6 +226,10 @@
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%A4%9A%E6%A8%A1%E6%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">多模态机器学习</span></a>
                 </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%A4%9A%E6%A8%A1%E6%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%BE%AE%E8%B0%83%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">微调算法</span></a>
+                </span>
             </span>
 
           
@@ -241,14 +245,14 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">本文字数：</span>
-              <span>1.3k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="阅读时长">
               <span class="post-meta-item-icon">
                 <i class="far fa-clock"></i>
               </span>
                 <span class="post-meta-item-text">阅读时长 &asymp;</span>
-              <span>1 分钟</span>
+              <span>2 分钟</span>
             </span>
 
         </div>
@@ -260,21 +264,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2407.15819">https://arxiv.org/pdf/2407.15819</a></p>
-<p>项目地址：<a target="_blank" rel="noopener" href="https://chain-of-sight.github.io/">https://chain-of-sight.github.io/</a></p>
-<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><hr>
-<p>由于受到计算资源的限制，个体研究者们难以自行预训练多模态大模型，往往都是加载已经预训练好的模型权重，然后再根据自己的任务进行微调。这限制了模型架构的发展，因为研究者们往往需要对自己的模型进行修改以适配预训练的多模态大模型。但是如果能够降低预训练阶段的计算资源消耗，使得研究人员能够负担的起预训练的开销，那么上述问题便能迎刃而解。这篇论文提出了一种多尺度视觉特征重采样器，以减少预训练阶段的视觉token的数量，从而大幅度降低预训练成本，并且对性能的影响较小。</p>
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><hr>
-<p>作者首先介绍了视觉重采样器(Visual resamplers)。视觉重采样器是一种类似于感知器的结构，它采用可学习的query和交叉注意力机制将视觉知识压缩成一定数量的视觉token。由于注意力机制的特性，输出token的数量由输入的query数量决定，这样可以使得视觉token的数量不受输入图像分辨率和滑动窗口大小的影响，而由设计者本人决定。当然这种方法会带来一定的信息损失。</p>
-<p>然后作者介绍了自己的多尺度视觉特征重采样器（Multi-scale visual resamplers）。作者借鉴了在计算机视觉中的视觉金字塔思想，用不同大小的窗口对一张图像进行多次采样，然后再使用视觉重采样器将每一个尺度的滑动窗口产生的视觉token的数量压缩到$N$个，最后按照从粗粒度到细粒度的顺序将这些token依次送入语言模型进行预训练。粗粒度的视觉token由尺度较大的滑动窗口产生，细粒度的视觉token由尺度较小的滑动窗口产生。作者特别强调，视觉token的顺序很重要，从粗粒度token到细粒度token的顺序的预训练性能要明显优于从细粒度token到粗粒度token。</p>
-<p>显然，压缩预训练阶段模型的视觉token数量会带来模型在下游任务上的性能下降。为了缓解这个问题，作者提出了一种后预训练token缩放策略（ Post-pretrain token scaling strategy）来进行微调。由于更改滑动窗口大小和图像分辨率将会平方地改变视觉token的数量，所以作者提出了缩放滑动窗口大小和图像分辨率的混合缩放策略，这样可以增加微调阶段视觉token的数量，从而保证模型的性能。</p>
-<p><img src="https://chain-of-sight.github.io/static/images/chain-of-sight_architecture.png" alt="Chain of Sight模型架构图"></p>
-<p><strong>为什么作者要调整预训练阶段视觉token的数量而不是文本token的数量？</strong></p>
-<p>多模态大模型的参数主要集中在语言模型，语言模型消耗了大部分计算资源。为了减少语言模型的计算资源消耗，就必须减少预训练阶段的token数量，包括视觉token和文本token。由于视觉token的数量往往显著多于文本token的数量，所以作者要减少视觉token的数量，从而降低预训练计算资源消耗。</p>
-<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2><hr>
-<p>论文中做了各种实验，在此不一一赘述，感兴趣的读者可以去读原论文。</p>
-<h2 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h2><hr>
-<p>作者提到使用LoRa方法微调的模型相对于直接监督微调所有参数的模型通用性会降低，这是由于计算资源限制的无奈之举。作者希望能够探索更好的预训练方法突破计算资源的限制。</p>
+        <p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.11797">https://arxiv.org/pdf/2109.11797</a><br>代码地址：<a target="_blank" rel="noopener" href="https://github.com/thunlp/CPT">https://github.com/thunlp/CPT</a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><hr>
+<p>预训练视觉语言模型在视觉语义定位任务(Visual Grounding)中表现出优良性能，促进了跨模态任务的发展。然而，由于预训练任务和下游任务的目标形式之间存在着显著差异，必须使用大量带标签的数据对模型进行微调才能在下游任务上激发模型的视觉语义定位能力。为了解决这种困境，作者提出了一种色彩微调方法（Colorful Prompt Tuning）。这是一种全新的跨膜态微调范式，它将原本的视觉语义定位任务重构为色彩填空任务，显著减少了预训练任务和下游任务的目标形式的差异。</p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><hr>
+<p>作者首先介绍了传统的多模态大模型的训练范式（即<em>pre-training-then-fine-tuning</em>）的不足。作者提到，在传统的预训练范式中，往往采用一种跨模态的填空任务，类似于BERT的训练方法，模型尝试从上下文的多模态token中预测被遮挡的token。而在微调阶段，则多是对未遮挡的token进行语义分类。作者认为预训练阶段和微调阶段的目标形式不同抑制了模型在预训练过程中获得的视觉语义定位能力，从而必须采用大量的监督数据在下游任务上微调预训练模型。</p>
+<p>作者提出的模型CPT核心在于将在图像中进行语义定位的任务重新表述为填空问题，从而最大程度上减少预训练阶段和微调阶段的差异。<br>CPT包括两个组件，其一是视觉子提示(visual sub-prompt)，采用颜色块唯一地表示图像中的区域；其二是文本子提示(textual sub-prompt)，将query构造成一个基于色彩的问题模板。这样一来，在目标图像中定位语义区域便可以转变为从带有掩码的query模板中预测出相应的颜色标记。<br><img src="https://github.com/thunlp/CPT/blob/main/demo/teaser.png?raw=true" alt="传统方法和作者提出的方法"></p>
+<p>作者的工作可以概括为：1.提出了跨模态提示微调范式(CPT)；2.提出了高质量的跨模态提示配置方式；3.做了一系列实验测试CPT的性能。</p>
+<h1 id="模型架构"><a href="#模型架构" class="headerlink" title="模型架构"></a>模型架构</h1><hr>
+<h2 id="视觉子提示-VISUAL-SUB-PROMPT"><a href="#视觉子提示-VISUAL-SUB-PROMPT" class="headerlink" title="视觉子提示(VISUAL SUB-PROMPT)"></a>视觉子提示(VISUAL SUB-PROMPT)</h2><p>给定一张图像$I$和其感兴趣区域$R&#x3D;{v_1,v_2,…,v_n}$，视觉子提示的目标是用自然视觉标记唯一地表示每个图像区域。作者由先前的研究工作用色彩块来唯一表示图像中的目标得到启发，用一个色彩集合$C$将图像区域和文本联系在一起。$c_i &#x3D; (c_v^i,c_w^i)\in C$由其色彩的视觉表示和色彩的文本表示定义。之后，作者将图像区域$v_i$与其唯一色彩表示$c_v^i$联系起来，得到了一个有色图像区域集合$\Psi(R;C)$，该集合中的一个元素便称为视觉子提示。</p>
+<p>作者还讨论了视觉子提示的形状对模型性能的影响。作者在实验中发现实心的色彩块或者目标分割掩码要优于色彩边界框，作者认为其原因是现实世界中实心色彩的物体更常见。</p>
+<h2 id="文本子提示-TEXTUAL-SUB-PROMPT"><a href="#文本子提示-TEXTUAL-SUB-PROMPT" class="headerlink" title="文本子提示(TEXTUAL SUB-PROMPT)"></a>文本子提示(TEXTUAL SUB-PROMPT)</h2><p>作者首先将数据集中的图像文本对中的文本转为手工定义的色彩文本模板，即：</p>
+<p>$$<br>\tau_g(q) &#x3D; [CLS] : q: is: in:[MASK]: color: [SEP]<br>$$</p>
+<p>其中的$[MASK]$就是模型尝试填空的目标。<br>模型根据下述公式决定$[MASK]$中所填的颜色：</p>
+<p>$$<br>P(v&#x3D;v_i|R,q)&#x3D;P([MASK]&#x3D;c_w^i|\Psi(R;C),\tau_g(q)) &#x3D; \frac{\exp(h_{[MASK]}^Tc_w^i)}{\sum_{c_j\in C}{\exp(h_{[MASK]}^T)c_w^j}}<br>$$</p>
+<h2 id="训练和推断"><a href="#训练和推断" class="headerlink" title="训练和推断"></a>训练和推断</h2><p>训练目标采用的是多分类交叉熵。<br>如何决定色彩集合的配置是训练过程的关键。作者提出了跨模态提示检索方法(CPS)解决这个问题。</p>
+<h3 id="CPS算法过程"><a href="#CPS算法过程" class="headerlink" title="CPS算法过程"></a>CPS算法过程</h3><h4 id="1-候选集生成"><a href="#1-候选集生成" class="headerlink" title="(1) 候选集生成"></a><strong>(1) 候选集生成</strong></h4><ul>
+<li><strong>颜色文本候选集（$C^w$）</strong>：从文本模态中提取一组颜色相关的文本候选，例如“红色”、“蓝色”等。</li>
+<li><strong>视觉外观候选集（$C^v$）</strong>：从视觉模态中提取一组颜色相关的视觉外观候选，例如纯色块。</li>
+</ul>
+<h4 id="2-伪数据实例构建"><a href="#2-伪数据实例构建" class="headerlink" title="(2) 伪数据实例构建"></a><strong>(2) 伪数据实例构建</strong></h4><p>对于每个视觉外观候选 $c^v∈C^v$，构建一个伪数据实例：</p>
+<ul>
+<li><strong>视觉输入</strong>：一个纯色的颜色块，颜色为 $c^v$。</li>
+<li><strong>文本输入</strong>：一个固定的模板文本，例如 <code>&quot;[CLS] a photo in [MASK] color [SEP]&quot;</code>，其中 <code>[MASK]</code> 是需要模型预测的颜色词。</li>
+</ul>
+<h4 id="3-解码分数计算"><a href="#3-解码分数计算" class="headerlink" title="(3) 解码分数计算"></a><strong>(3) 解码分数计算</strong></h4><p>将伪数据实例输入到视觉-语言预训练模型（VL-PTMs）中，计算每个颜色文本候选 $c^w∈C^w$ 的解码分数 $s(c^v,c^w)$。解码分数表示视觉外观 $c^v$ 和颜色文本 $c^w$ 之间的相关性，分数越高，相关性越强。</p>
+<h4 id="4-颜色文本筛选"><a href="#4-颜色文本筛选" class="headerlink" title="(4) 颜色文本筛选"></a><strong>(4) 颜色文本筛选</strong></h4><p>保留对每个视觉外观候选 $c^v$ 解码分数最高的颜色文本</p>
+<h5 id="5-视觉外观筛选"><a href="#5-视觉外观筛选" class="headerlink" title="(5) 视觉外观筛选"></a><strong>(5) 视觉外观筛选</strong></h5><p>根据颜色文本 $Cw$，筛选出对每个颜色文本解码分数最高的视觉外观</p>
+<h5 id="6-透明度调整"><a href="#6-透明度调整" class="headerlink" title="(6) 透明度调整"></a><strong>(6) 透明度调整</strong></h5><p>为了保留图像区域的原始内容，对视觉外观应用透明度超参数 α∈(0,1)，使得颜色块与原始图像内容混合。</p>
+<h3 id="图像区域整合"><a href="#图像区域整合" class="headerlink" title="图像区域整合"></a>图像区域整合</h3><p>由于图像感兴趣区域数量往往远多于色彩集合大小，所以需要对图像区域进行分组整合。作者将图像区域分为许多组，每一个组只有适当的交叉区域，然后用一个视觉子提示标识整个组。</p>
 
     </div>
 
@@ -292,7 +310,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://example.com/2025/03/30/Chain-of-Sight-md/" title="Chain_of_Sight加速多模态大模型预训练.md">http://example.com/2025/03/30/Chain-of-Sight-md/</a>
+    <a href="http://example.com/2025/03/31/cpt/" title="CPT模型（针对预训练模型的色彩提示微调）">http://example.com/2025/03/31/cpt/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -304,7 +322,7 @@
       <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/%E5%A4%9A%E6%A8%A1%E6%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 多模态机器学习</a>
-              <a href="/tags/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" rel="tag"># 大语言模型</a>
+              <a href="/tags/%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95/" rel="tag"># 微调方法</a>
           </div>
 
         
@@ -313,13 +331,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2025/03/25/test/" rel="prev" title="test">
-      <i class="fa fa-chevron-left"></i> test
+    <a href="/2025/03/30/Chain-of-Sight-md/" rel="prev" title="Chain_of_Sight加速多模态大模型预训练.md">
+      <i class="fa fa-chevron-left"></i> Chain_of_Sight加速多模态大模型预训练.md
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2025/03/31/cpt/" rel="next" title="CPT模型（针对预训练模型的色彩提示微调）">
-      CPT模型（针对预训练模型的色彩提示微调） <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -378,7 +393,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">3.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">4.</span> <span class="nav-text">局限性</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E6%9E%B6%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">模型架构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%86%E8%A7%89%E5%AD%90%E6%8F%90%E7%A4%BA-VISUAL-SUB-PROMPT"><span class="nav-number">3.1.</span> <span class="nav-text">视觉子提示(VISUAL SUB-PROMPT)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%AD%90%E6%8F%90%E7%A4%BA-TEXTUAL-SUB-PROMPT"><span class="nav-number">3.2.</span> <span class="nav-text">文本子提示(TEXTUAL SUB-PROMPT)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83%E5%92%8C%E6%8E%A8%E6%96%AD"><span class="nav-number">3.3.</span> <span class="nav-text">训练和推断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CPS%E7%AE%97%E6%B3%95%E8%BF%87%E7%A8%8B"><span class="nav-number">3.3.1.</span> <span class="nav-text">CPS算法过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%80%99%E9%80%89%E9%9B%86%E7%94%9F%E6%88%90"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">(1) 候选集生成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BC%AA%E6%95%B0%E6%8D%AE%E5%AE%9E%E4%BE%8B%E6%9E%84%E5%BB%BA"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">(2) 伪数据实例构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%A7%A3%E7%A0%81%E5%88%86%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="nav-number">3.3.1.3.</span> <span class="nav-text">(3) 解码分数计算</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E9%A2%9C%E8%89%B2%E6%96%87%E6%9C%AC%E7%AD%9B%E9%80%89"><span class="nav-number">3.3.1.4.</span> <span class="nav-text">(4) 颜色文本筛选</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#5-%E8%A7%86%E8%A7%89%E5%A4%96%E8%A7%82%E7%AD%9B%E9%80%89"><span class="nav-number">3.3.1.4.1.</span> <span class="nav-text">(5) 视觉外观筛选</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#6-%E9%80%8F%E6%98%8E%E5%BA%A6%E8%B0%83%E6%95%B4"><span class="nav-number">3.3.1.4.2.</span> <span class="nav-text">(6) 透明度调整</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E5%83%8F%E5%8C%BA%E5%9F%9F%E6%95%B4%E5%90%88"><span class="nav-number">3.3.2.</span> <span class="nav-text">图像区域整合</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 

@@ -177,6 +177,130 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/31/cpt/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRUpAmio-q9vrzRIp1bLP-7yH4jtHDss6W8Mg&s">
+      <meta itemprop="name" content="Zhang Young">
+      <meta itemprop="description" content="吾将上下而求索">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zhang Young's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2025/03/31/cpt/" class="post-title-link" itemprop="url">CPT模型（针对预训练模型的色彩提示微调）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2025-03-31 02:00:48 / 修改时间：02:04:06" itemprop="dateCreated datePublished" datetime="2025-03-31T02:00:48+08:00">2025-03-31</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" itemprop="url" rel="index"><span itemprop="name">人工智能</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%A4%9A%E6%A8%A1%E6%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">多模态机器学习</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%A4%9A%E6%A8%A1%E6%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/%E5%BE%AE%E8%B0%83%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">微调算法</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>论文地址：<a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2109.11797">https://arxiv.org/pdf/2109.11797</a><br>代码地址：<a target="_blank" rel="noopener" href="https://github.com/thunlp/CPT">https://github.com/thunlp/CPT</a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><hr>
+<p>预训练视觉语言模型在视觉语义定位任务(Visual Grounding)中表现出优良性能，促进了跨模态任务的发展。然而，由于预训练任务和下游任务的目标形式之间存在着显著差异，必须使用大量带标签的数据对模型进行微调才能在下游任务上激发模型的视觉语义定位能力。为了解决这种困境，作者提出了一种色彩微调方法（Colorful Prompt Tuning）。这是一种全新的跨膜态微调范式，它将原本的视觉语义定位任务重构为色彩填空任务，显著减少了预训练任务和下游任务的目标形式的差异。</p>
+<h1 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h1><hr>
+<p>作者首先介绍了传统的多模态大模型的训练范式（即<em>pre-training-then-fine-tuning</em>）的不足。作者提到，在传统的预训练范式中，往往采用一种跨模态的填空任务，类似于BERT的训练方法，模型尝试从上下文的多模态token中预测被遮挡的token。而在微调阶段，则多是对未遮挡的token进行语义分类。作者认为预训练阶段和微调阶段的目标形式不同抑制了模型在预训练过程中获得的视觉语义定位能力，从而必须采用大量的监督数据在下游任务上微调预训练模型。</p>
+<p>作者提出的模型CPT核心在于将在图像中进行语义定位的任务重新表述为填空问题，从而最大程度上减少预训练阶段和微调阶段的差异。<br>CPT包括两个组件，其一是视觉子提示(visual sub-prompt)，采用颜色块唯一地表示图像中的区域；其二是文本子提示(textual sub-prompt)，将query构造成一个基于色彩的问题模板。这样一来，在目标图像中定位语义区域便可以转变为从带有掩码的query模板中预测出相应的颜色标记。<br><img src="https://github.com/thunlp/CPT/blob/main/demo/teaser.png?raw=true" alt="传统方法和作者提出的方法"></p>
+<p>作者的工作可以概括为：1.提出了跨模态提示微调范式(CPT)；2.提出了高质量的跨模态提示配置方式；3.做了一系列实验测试CPT的性能。</p>
+<h1 id="模型架构"><a href="#模型架构" class="headerlink" title="模型架构"></a>模型架构</h1><hr>
+<h2 id="视觉子提示-VISUAL-SUB-PROMPT"><a href="#视觉子提示-VISUAL-SUB-PROMPT" class="headerlink" title="视觉子提示(VISUAL SUB-PROMPT)"></a>视觉子提示(VISUAL SUB-PROMPT)</h2><p>给定一张图像$I$和其感兴趣区域$R&#x3D;{v_1,v_2,…,v_n}$，视觉子提示的目标是用自然视觉标记唯一地表示每个图像区域。作者由先前的研究工作用色彩块来唯一表示图像中的目标得到启发，用一个色彩集合$C$将图像区域和文本联系在一起。$c_i &#x3D; (c_v^i,c_w^i)\in C$由其色彩的视觉表示和色彩的文本表示定义。之后，作者将图像区域$v_i$与其唯一色彩表示$c_v^i$联系起来，得到了一个有色图像区域集合$\Psi(R;C)$，该集合中的一个元素便称为视觉子提示。</p>
+<p>作者还讨论了视觉子提示的形状对模型性能的影响。作者在实验中发现实心的色彩块或者目标分割掩码要优于色彩边界框，作者认为其原因是现实世界中实心色彩的物体更常见。</p>
+<h2 id="文本子提示-TEXTUAL-SUB-PROMPT"><a href="#文本子提示-TEXTUAL-SUB-PROMPT" class="headerlink" title="文本子提示(TEXTUAL SUB-PROMPT)"></a>文本子提示(TEXTUAL SUB-PROMPT)</h2><p>作者首先将数据集中的图像文本对中的文本转为手工定义的色彩文本模板，即：</p>
+<p>$$<br>\tau_g(q) &#x3D; [CLS] : q: is: in:[MASK]: color: [SEP]<br>$$</p>
+<p>其中的$[MASK]$就是模型尝试填空的目标。<br>模型根据下述公式决定$[MASK]$中所填的颜色：</p>
+<p>$$<br>P(v&#x3D;v_i|R,q)&#x3D;P([MASK]&#x3D;c_w^i|\Psi(R;C),\tau_g(q)) &#x3D; \frac{\exp(h_{[MASK]}^Tc_w^i)}{\sum_{c_j\in C}{\exp(h_{[MASK]}^T)c_w^j}}<br>$$</p>
+<h2 id="训练和推断"><a href="#训练和推断" class="headerlink" title="训练和推断"></a>训练和推断</h2><p>训练目标采用的是多分类交叉熵。<br>如何决定色彩集合的配置是训练过程的关键。作者提出了跨模态提示检索方法(CPS)解决这个问题。</p>
+<h3 id="CPS算法过程"><a href="#CPS算法过程" class="headerlink" title="CPS算法过程"></a>CPS算法过程</h3><h4 id="1-候选集生成"><a href="#1-候选集生成" class="headerlink" title="(1) 候选集生成"></a><strong>(1) 候选集生成</strong></h4><ul>
+<li><strong>颜色文本候选集（$C^w$）</strong>：从文本模态中提取一组颜色相关的文本候选，例如“红色”、“蓝色”等。</li>
+<li><strong>视觉外观候选集（$C^v$）</strong>：从视觉模态中提取一组颜色相关的视觉外观候选，例如纯色块。</li>
+</ul>
+<h4 id="2-伪数据实例构建"><a href="#2-伪数据实例构建" class="headerlink" title="(2) 伪数据实例构建"></a><strong>(2) 伪数据实例构建</strong></h4><p>对于每个视觉外观候选 $c^v∈C^v$，构建一个伪数据实例：</p>
+<ul>
+<li><strong>视觉输入</strong>：一个纯色的颜色块，颜色为 $c^v$。</li>
+<li><strong>文本输入</strong>：一个固定的模板文本，例如 <code>&quot;[CLS] a photo in [MASK] color [SEP]&quot;</code>，其中 <code>[MASK]</code> 是需要模型预测的颜色词。</li>
+</ul>
+<h4 id="3-解码分数计算"><a href="#3-解码分数计算" class="headerlink" title="(3) 解码分数计算"></a><strong>(3) 解码分数计算</strong></h4><p>将伪数据实例输入到视觉-语言预训练模型（VL-PTMs）中，计算每个颜色文本候选 $c^w∈C^w$ 的解码分数 $s(c^v,c^w)$。解码分数表示视觉外观 $c^v$ 和颜色文本 $c^w$ 之间的相关性，分数越高，相关性越强。</p>
+<h4 id="4-颜色文本筛选"><a href="#4-颜色文本筛选" class="headerlink" title="(4) 颜色文本筛选"></a><strong>(4) 颜色文本筛选</strong></h4><p>保留对每个视觉外观候选 $c^v$ 解码分数最高的颜色文本</p>
+<h5 id="5-视觉外观筛选"><a href="#5-视觉外观筛选" class="headerlink" title="(5) 视觉外观筛选"></a><strong>(5) 视觉外观筛选</strong></h5><p>根据颜色文本 $Cw$，筛选出对每个颜色文本解码分数最高的视觉外观</p>
+<h5 id="6-透明度调整"><a href="#6-透明度调整" class="headerlink" title="(6) 透明度调整"></a><strong>(6) 透明度调整</strong></h5><p>为了保留图像区域的原始内容，对视觉外观应用透明度超参数 α∈(0,1)，使得颜色块与原始图像内容混合。</p>
+<h3 id="图像区域整合"><a href="#图像区域整合" class="headerlink" title="图像区域整合"></a>图像区域整合</h3><p>由于图像感兴趣区域数量往往远多于色彩集合大小，所以需要对图像区域进行分组整合。作者将图像区域分为许多组，每一个组只有适当的交叉区域，然后用一个视觉子提示标识整个组。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+     
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/30/Chain-of-Sight-md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -508,20 +632,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -557,12 +681,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="站点总字数">2k</span>
+    <span title="站点总字数">4k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2 分钟</span>
+    <span title="站点阅读时长">3 分钟</span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
